@@ -1,0 +1,15 @@
+#!/bin/bash
+
+############################
+## System specific
+############################
+## Edit these to fit your install
+############################
+
+# Path to this bashrc repo
+export BASHRC="$HOME/wsl-bashrc"
+
+############################
+## .bashrc lib imports
+############################
+. "$BASHRC/lib-imports"

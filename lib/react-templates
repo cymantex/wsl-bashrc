@@ -1,0 +1,22 @@
+#!/bin/bash
+
+#########################
+# React templates
+#########################
+
+function npxCreateReactAppTypescript() {
+  if [[ $# -lt 1 ]]; then
+    echo "You need to provide a project name"
+    return
+  fi
+
+  npx create-react-app "$1" --template typescript "$@"
+}
+
+function npxCreateReactAppWithTailwind() {
+	npxCreateReactAppTypescript "$1" "$@"
+	cd "$1" || exit
+	npm install -D tailwindcss postcss autoprefixer
+	npx tailwindcss init -p
+}
+
