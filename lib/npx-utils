@@ -9,7 +9,7 @@ function npxCreateReactAppTypescript() {
 }
 
 function npxInstallTailwind() {
-	npm install -D tailwindcss postcss autoprefixer
+	pnpm install -D tailwindcss postcss autoprefixer
 	npx tailwindcss init -p
 }
 
