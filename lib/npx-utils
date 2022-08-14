@@ -5,11 +5,11 @@
 #########################
 
 function npxCreateReactAppTypescript() {
-  pnpm create next-app --typescript
+  npm create next-app --typescript
 }
 
 function npxInstallTailwind() {
-	pnpm install -D tailwindcss postcss autoprefixer
+	npm install -D tailwindcss postcss autoprefixer
 	npx tailwindcss init -p
 }
 
