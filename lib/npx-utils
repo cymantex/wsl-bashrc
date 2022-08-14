@@ -1,0 +1,15 @@
+#!/bin/bash
+
+#########################
+# NPX Utils
+#########################
+
+function npxCreateReactAppTypescript() {
+  pnpm create next-app --typescript
+}
+
+function npxInstallTailwind() {
+	npm install -D tailwindcss postcss autoprefixer
+	npx tailwindcss init -p
+}
+

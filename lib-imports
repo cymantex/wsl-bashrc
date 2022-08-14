@@ -17,4 +17,4 @@ export BASHRC_LIB="$BASHRC/lib"
 # A collection of various other functions/aliases that have been proven useful
 . "$BASHRC_LIB/misc-utils"
 
-. "$BASHRC_LIB/react-templates"
+. "$BASHRC_LIB/npx-utils"
