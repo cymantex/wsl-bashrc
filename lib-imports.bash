@@ -3,7 +3,7 @@
 ############################
 export BASHRC_LIB="$BASHRC/lib"
 
-. "$BASHRC_LIB/windows-paths"
+. "$BASHRC_LIB/windows-paths.bash"
 
 # Pretty print JSON/XML and decode zipped base64 payloads
 . "$BASHRC_LIB/serialization-utils.bash"
