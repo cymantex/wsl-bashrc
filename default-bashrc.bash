@@ -10,4 +10,5 @@ export BASHRC="$HOME/wsl-bashrc"
 ############################
 ## .bashrc lib imports
 ############################
-. "$BASHRC/lib-imports"
+. "$BASHRC/lib-imports.bash"
+. "$BASHRC/external-imports.bash"

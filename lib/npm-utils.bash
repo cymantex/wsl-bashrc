@@ -1,20 +1,20 @@
 #########################
-# NPX Utils
+# NPM Utils
 #########################
 
-function npxCreateNextAppTypescript() {
+function npmCreateNextAppTypescript() {
   npm create next-app --typescript
   npm install -D tailwindcss postcss autoprefixer
   npx tailwindcss init -p
 }
 
-function npxCreateViteReactApp() {
+function npmCreateViteReactApp() {
   npm create vite@latest $1 -- --template react-ts
   cd $1 || exit
   npm i
 }
 
-function npxInstallTailwind() {
+function npmInstallTailwind() {
 	npm install -D tailwindcss postcss autoprefixer
 	npx tailwindcss init -p
 }

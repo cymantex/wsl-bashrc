@@ -43,8 +43,7 @@ function gitAmendPush() {
 
 # Other
 function gitRemoveAllChanges() {
-  git stash save
-  git stash drop
-  git checkout .
-  git clean -fd
+	git restore --staged .
+	git checkout .
+	git clean -f .
 }
