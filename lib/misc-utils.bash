@@ -1,5 +1,3 @@
-#!/bin/bash
-
 ############################
 # Miscellaneous utilities
 ############################
@@ -51,11 +49,39 @@ function decryptDbeaverCredentials() {
 
   projectName=$1
   pwd=$PWD
-  cd $WIN_APPDATA/Roaming/DbeaverData/workspace6/$projectName/.dbeaver || return
+  cd "$WIN_APPDATA/Roaming/DbeaverData/workspace6/$projectName/.dbeaver" || return
   openssl aes-128-cbc -d \
     -K babb4a9f774ab853c96c2d653dfe544a \
     -iv 00000000000000000000000000000000 \
     -in credentials-config.json |
     dd bs=1 skip=16 2>/dev/null
   cd "$pwd" || exit
+}
+
+############################
+# Create environment variables
+############################
+createFolderEnvironmentVariables() {
+  environmentVariables="$(printFolderEnvironmentVariablesToCreate "$@" | sed 's/ /%/g')"
+  for environmentVariable in $environmentVariables; do
+    # shellcheck disable=SC2001
+    environmentVariableWithSpaces=$(echo "$environmentVariable" | sed 's/%/ /g')
+    echo "$environmentVariableWithSpaces"
+  done
+}
+
+printFolderEnvironmentVariablesToCreate() {
+  folder=$1
+  prefix=$2
+
+  folderPaths=$(find "$folder" -maxdepth 1 -type d | xargs --null | sed 's/ /%/g')
+
+  for folderPath in $folderPaths; do
+    folderName="$(basename "$folderPath")"
+    variableName=$(echo "${folderName^^}" | sed 's/-/_/g' | sed 's/ /_/g' | tr -cd '[:alnum:]_')
+
+    # shellcheck disable=SC2001
+    folderPathWithSpaces=$(echo "$folderPath" | sed 's/%/ /g')
+    echo "$prefix$variableName=$folderPathWithSpaces"
+  done
 }
