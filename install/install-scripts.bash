@@ -14,29 +14,6 @@ disableStartUpMessages() {
   touch .hushlogin
 }
 
-installWinSsh() {
-  cp -r "$WIN_HOME"/.ssh ~
-  chmod 600 ~/.ssh/id_rsa
-}
-
-createSymbolicLinks() {
-  printTitle "Creating/Recreating symbolic links"
-  rm ~/.testcontainers.properties
-  rm ~/.aws
-  rm ~/.kube
-  rm ~/.config
-  rm ~/.git-templates
-  rm ~/.m2
-
-  ln -s "$WIN_HOME"/.testcontainers.properties ~/.testcontainers.properties
-  ln -s "$WIN_HOME"/.aws ~
-  ln -s "$WIN_HOME"/.kube ~
-  ln -s "$WIN_HOME"/.config ~
-  ln -s "$WIN_HOME"/.git-templates ~
-  ln -s "$WIN_HOME"/.m2 ~
-  echo -e "\n"
-}
-
 installAptPackage() {
   printTitle "Installing/updating apt packages"
   sudo apt install -y software-properties-common lsb-release build-essential procps curl file git

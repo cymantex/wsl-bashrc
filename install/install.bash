@@ -7,8 +7,6 @@ disableStartUpMessages
 
 updateApt
 
-createSymbolicLinks
-
 printTitle "Installing/updating apt packages"
 sudo apt install -y software-properties-common lsb-release build-essential procps curl file git
 sudo apt install -y unzip zip dnf jq bat dos2unix libtool autoconf cmake libxml2-utils
@@ -24,6 +22,7 @@ installBat
 installQ
 installNeoVim
 installWslu
+installNode
 installCorrettoJdk
 installGo
 echo -e "\n"

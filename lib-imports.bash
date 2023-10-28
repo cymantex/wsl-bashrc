@@ -9,6 +9,7 @@ export BASHRC_INSTALL="$WSL_BASHRC/install"
 . "$BASHRC_LIB/cli-tools.bash"
 
 . "$BASHRC_INSTALL/install-scripts.bash"
+. "$BASHRC_INSTALL/setup-scripts.bash"
 
 # Pretty print JSON/XML and decode zipped base64 payloads
 . "$BASHRC_LIB/serialization-utils.bash"
