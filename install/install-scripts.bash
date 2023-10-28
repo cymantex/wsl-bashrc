@@ -52,13 +52,18 @@ installCorrettoJdk() {
 }
 
 installMaven() {
+  if [[ -z "${MAVEN_VERSION}" ]]; then
+    echo "MAVEN_VERSION environment variable is not set"
+    exit
+  fi
+
   if test -d /opt/apache-maven-"$MAVEN_VERSION"; then
     printAlreadyInstalled "maven"
     return
   fi
 
-  wget https://dlcdn.apache.org/maven/maven-3/"$MAVEN_VERSION"/binaries/apache-maven-"$MAVEN_VERSION"-bin.tar.gz
-  sudo tar -xvf apache-maven-"$MAVEN_VERSION"-bin.tar.gz
+  wget https://dlcdn.apache.org/maven/maven-3/"$MAVEN_VERSION"/binaries/apache-maven-"$MAVEN_VERSION"-bin.tar.gz || exit
+  sudo tar -xvf apache-maven-"$MAVEN_VERSION"-bin.tar.gz || exit
   sudo mv apache-maven-"$MAVEN_VERSION" /opt
   rm apache-maven-"$MAVEN_VERSION"-bin.tar.gz
 }
