@@ -46,6 +46,8 @@ gitRemoveAllChanges() {
 }
 
 gitUpdateWslBashrc() {
+  originalPwd=$(pwd)
   cd "$WSL_BASHRC" || return
   gitStashPull --rebase
+  cd "$originalPwd" || return
 }
