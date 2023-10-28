@@ -4,6 +4,11 @@ printTitle() {
   echo "###############################"
 }
 
+setupGit() {
+  git config --global user.email "sim.eriksson@outlook.com"
+  git config --global user.name "Simon Eriksson"
+}
+
 disableStartUpMessages() {
   touch .sudo_as_admin_successful
   touch .hushlogin
