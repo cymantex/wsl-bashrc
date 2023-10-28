@@ -44,3 +44,8 @@ gitRemoveAllChanges() {
 	git checkout .
 	git clean -f .
 }
+
+gitUpdateWslBashrc() {
+  cd "$WSL_BASHRC" || return
+  gitStashPull --rebase
+}
