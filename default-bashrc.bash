@@ -5,10 +5,10 @@
 ############################
 
 # Path to this bashrc repo
-export BASHRC="$HOME/wsl-bashrc"
+export WSL_BASHRC="$HOME/wsl-bashrc"
 
 ############################
 ## .bashrc lib imports
 ############################
-. "$BASHRC/lib-imports.bash"
-. "$BASHRC/external-imports.bash"
+. "$WSL_BASHRC/lib-imports.bash"
+. "$WSL_BASHRC/external-imports.bash"

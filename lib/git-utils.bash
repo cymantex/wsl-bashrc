@@ -1,7 +1,7 @@
 #########################
 # Git
 #########################
-function getMasterBranchName() {
+getMasterBranchName() {
   if [[ $(git branch | grep "main") != "" ]]; then
     echo "main"
   else
@@ -9,40 +9,37 @@ function getMasterBranchName() {
   fi
 }
 
-function gitRemoveBranchByRegex() {
+gitRemoveBranchByRegex() {
   git branch | grep $1 | xargs git branch -D
 }
 
 # Pull / Push / Commit
-function gitStashPull() {
+gitStashPull() {
   git add .
   git stash save
-  git pull --rebase
 
-  if [[ $? == 0 ]]; then
+  if git pull "$@"; then
     git stash pop
   fi
 }
 
-function gitAmend() {
+gitAmend() {
   git add .
   git commit --amend --no-edit
 }
 
-function gitPush() {
-  git pull "$@"
-
-  if [[ $? == 0 ]]; then
+gitPush() {
+  if git pull "$@"; then
     git push
   fi
 }
 
-function gitAmendPush() {
+gitAmendPush() {
   gitAmend && gitPush "$@"
 }
 
 # Other
-function gitRemoveAllChanges() {
+gitRemoveAllChanges() {
 	git restore --staged .
 	git checkout .
 	git clean -f .

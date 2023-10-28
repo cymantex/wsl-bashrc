@@ -1,29 +1,29 @@
 ############################
 # JSON / XML / Base64
 ############################
-function prettifyJson() {
+prettifyJson() {
   echo ''$1'' | python3 -m json.tool
 }
 
-function prettifyJsonFile() {
+prettifyJsonFile() {
   cat $1 | python3 -m json.tool
 }
 
-function prettifyXml() {
+prettifyXml() {
   echo "$1" | xmllint --format -
 }
 
-function prettifyXmlFile() {
+prettifyXmlFile() {
   cat $1 | xmllint --format -
 }
 
 # Provide a zipped base64 encoded string as argument and this command will print it in clear text
-function unzipBase64() {
+unzipBase64() {
   echo "$1" | base64 -d | gunzip
 }
 
 # Same as above but will also format the string if it is JSON or XML
-function prettyUnzipBase64() {
+prettyUnzipBase64() {
   UNZIPPED=$(unzipBase64 "$1")
 
   TYPE=$(echo $UNZIPPED | sed -r '

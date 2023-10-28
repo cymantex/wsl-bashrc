@@ -1,9 +1,14 @@
 ############################
 ## bashrc imports
 ############################
-export BASHRC_LIB="$BASHRC/lib"
+export BASHRC_LIB="$WSL_BASHRC/lib"
+export BASHRC_INSTALL="$WSL_BASHRC/install"
 
 . "$BASHRC_LIB/windows-paths.bash"
+
+. "$BASHRC_LIB/cli-tools.bash"
+
+. "$BASHRC_INSTALL/install-scripts.bash"
 
 # Pretty print JSON/XML and decode zipped base64 payloads
 . "$BASHRC_LIB/serialization-utils.bash"
@@ -16,5 +21,3 @@ export BASHRC_LIB="$BASHRC/lib"
 
 # A collection of various other functions/aliases that have been proven useful
 . "$BASHRC_LIB/misc-utils.bash"
-
-. "$BASHRC_LIB/npm-utils.bash"

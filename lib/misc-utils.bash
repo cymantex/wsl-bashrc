@@ -3,8 +3,8 @@
 ############################
 alias reloadBashrc=". ~/.bashrc"
 
-function sudoWithLocalBashrc() {
-	sudo bash -c 'source /home/'$VCN_ID'/.bashrc; '$1''
+sudoWithLocalBashrc() {
+	sudo bash -c 'source /home/'$USER'/.bashrc; '$@''
 }
 
 # Clipboard
@@ -16,7 +16,7 @@ alias killJava='killall java'
 alias killNode='killall node'
 
 # Allows calling python module using a syntax like _python3 path/to/script.py
-function _python3() {
+_python3() {
   scriptPath=$1
   shift
 
@@ -30,7 +30,7 @@ function _python3() {
 # Run .sql on .csv files
 # Install & docs: http://harelba.github.io/q/
 #########################
-function runCsvSql() {
+runCsvSql() {
   sql_file="$(cat $1)"
   # Parameters which works with the default DBeaver .csv export.
   q -H -O -d , "$sql_file"
@@ -41,7 +41,7 @@ function runCsvSql() {
 ############################
 
 # Useful if you want to know the password for a given connection
-function decryptDbeaverCredentials() {
+decryptDbeaverCredentials() {
   if [[ $# -ne 1 ]]; then
     echo "Usage: decryptDbeaverCredentials <project_name>"
     return
