@@ -39,6 +39,4 @@ installKubectx
 installK9s
 echo -e "\n"
 
-updateApt
-
 printCliLinks
