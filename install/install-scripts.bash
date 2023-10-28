@@ -51,6 +51,18 @@ installCorrettoJdk() {
   sudo apt-get install -y java-17-amazon-corretto-jdk || exit
 }
 
+installMaven() {
+  if test -d /opt/apache-maven-"$MAVEN_VERSION"; then
+    printAlreadyInstalled "maven"
+    return
+  fi
+
+  wget https://dlcdn.apache.org/maven/maven-3/"$MAVEN_VERSION"/binaries/apache-maven-"$MAVEN_VERSION"-bin.tar.gz
+  sudo tar -xvf apache-maven-"$MAVEN_VERSION"-bin.tar.gz
+  sudo mv apache-maven-"$MAVEN_VERSION" /opt
+  rm apache-maven-"$MAVEN_VERSION"-bin.tar.gz
+}
+
 installGo() {
   if test -d /usr/local/go; then
     printAlreadyInstalled "go"

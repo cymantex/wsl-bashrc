@@ -22,6 +22,14 @@ if test -d /usr/local/go; then
   export PATH=$PATH:/usr/local/go/bin
 fi
 
+# Maven
+export MAVEN_VERSION=3.9.5
+
+if test -d /opt/apache-maven-"$MAVEN_VERSION"; then
+  M2_HOME="/opt/apache-maven-$MAVEN_VERSION"
+  PATH="$M2_HOME/bin:$PATH"
+fi
+
 ############################
 # CLI Tools
 ############################
