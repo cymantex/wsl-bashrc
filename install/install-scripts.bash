@@ -14,20 +14,6 @@ disableStartUpMessages() {
   touch .hushlogin
 }
 
-installAptPackage() {
-  printTitle "Installing/updating apt packages"
-  sudo apt install -y software-properties-common lsb-release build-essential procps curl file git
-  sudo apt install -y unzip zip dnf jq bat dos2unix libtool autoconf cmake libxml2-utils
-  echo -e "\n"
-}
-
-installPackageManagers() {
-  printTitle "Installing package managers"
-  installNvm
-  installHomebrew
-  echo -e "\n"
-}
-
 printAlreadyInstalled() {
   echo "$1 already installed. Skipping..."
 }
