@@ -50,4 +50,5 @@ gitUpdateWslBashrc() {
   cd "$WSL_BASHRC" || return
   gitStashPull --rebase
   cd "$originalPwd" || return
+  reloadBashrc
 }
