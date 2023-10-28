@@ -4,9 +4,9 @@ printTitle() {
   echo "###############################"
 }
 
-setupGit() {
-  git config --global user.email "sim.eriksson@outlook.com"
-  git config --global user.name "Simon Eriksson"
+forceRestart() {
+  printTitle "$1 installed - restart terminal and rerun script to continue the install"
+  exit
 }
 
 disableStartUpMessages() {
@@ -14,16 +14,26 @@ disableStartUpMessages() {
   touch .hushlogin
 }
 
+installWinSsh() {
+  cp -r "$WIN_HOME"/.ssh ~
+  chmod 600 ~/.ssh/id_rsa
+}
+
 createSymbolicLinks() {
-  printTitle "Creating symbolic links"
+  printTitle "Creating/Recreating symbolic links"
+  rm ~/.testcontainers.properties
+  rm ~/.aws
+  rm ~/.kube
+  rm ~/.config
+  rm ~/.git-templates
+  rm ~/.m2
+
   ln -s "$WIN_HOME"/.testcontainers.properties ~/.testcontainers.properties
   ln -s "$WIN_HOME"/.aws ~
   ln -s "$WIN_HOME"/.kube ~
   ln -s "$WIN_HOME"/.config ~
   ln -s "$WIN_HOME"/.git-templates ~
   ln -s "$WIN_HOME"/.m2 ~
-  ln -s "$WIN_HOME"/starlify-docker ~
-  cp -r "$WIN_HOME"/.ssh ~
   echo -e "\n"
 }
 
@@ -71,7 +81,7 @@ installGo() {
   fi
 
   wget https://go.dev/dl/go1.21.3.linux-amd64.tar.gz
-  tar -C /usr/local -xzf go1.21.3.linux-amd64.tar.gz
+  sudo tar -C /usr/local -xzf go1.21.3.linux-amd64.tar.gz
   export PATH=$PATH:/usr/local/go/bin
   rm go1.21.3.linux-amd64.tar.gz
 }
@@ -130,6 +140,7 @@ installKrew() {
   ) || exit
 
   reloadBashrc
+  forceRestart "kubectl krew"
 }
 
 installKubectx() {
@@ -156,8 +167,7 @@ installHomebrew() {
   fi
 
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" || exit
-  printTitle "Homebrew installed - rerun script to install packages"
-  exit
+  forceRestart "homebrew"
 }
 
 installNvm() {
@@ -191,11 +201,10 @@ installNeoVim() {
     return
   fi
 
-  sudo add-apt-repository ppa:neovim-ppa/unstable
+  sudo add-apt-repository ppa:neovim-ppa/unstable || exit
   sudo apt update
   sudo apt install neovim || exit
   git clone https://github.com/nvim-lua/kickstart.nvim.git "${XDG_CONFIG_HOME:-$HOME/.config}"/nvim || exit
-  git config core.editor nvim
 }
 
 installBat() {
@@ -217,7 +226,7 @@ installWslu() {
 
   sudo add-apt-repository -y ppa:wslutilities/wslu
   sudo apt update
-  sudo apt install wslu
+  sudo apt install -y wslu
 }
 
 installQ() {
@@ -227,6 +236,10 @@ installQ() {
   fi
 
   wget https://github.com/harelba/q/releases/download/v3.1.6/q-text-as-data-3.1.6-1.x86_64.deb || exit
-  sudo dpkg -i https://github.com/harelba/q/releases/download/v3.1.6/q-text-as-data-3.1.6-1.x86_64.deb || exit
+  sudo dpkg -i q-text-as-data-3.1.6-1.x86_64.deb || exit
   rm q-text-as-data-3.1.6-1.x86_64.deb
+}
+
+installNode() {
+  nvm install node || exit
 }
