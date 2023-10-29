@@ -223,3 +223,42 @@ installQ() {
 installNode() {
   nvm install node || exit
 }
+
+verifyInstall() {
+  GREEN='\033[01;32m'
+  RED='\033[0;31m'
+  NOCOLOR='\033[0m'
+  commandOutput=$("$@")
+
+  if [[ $? -eq 0 ]]; then
+    printf "%20s:\t${GREEN}OK!$NOCOLOR\n" "$*"
+  else
+    printf "%20s:\t${RED}ERROR!$NOCOLOR\n" "$*"
+    echo -e "${RED}$commandOutput$NOCOLOR"
+  fi
+}
+
+verifyCliToolInstalls() {
+  verifyInstall jq --version
+  verifyInstall q -h
+  verifyInstall nvim --version
+  verifyInstall bat --version
+  verifyInstall batgrep --version
+
+  verifyInstall nvm --version
+  verifyInstall brew --version
+
+  verifyInstall wslview --version
+
+  verifyInstall node --version
+  verifyInstall java --version
+  verifyInstall mvn --version
+  verifyInstall go version
+
+  verifyInstall kubectl --help
+  verifyInstall kubectx --help
+  verifyInstall k9s --help
+
+  verifyInstall aws --version
+  verifyInstall sam --version
+}

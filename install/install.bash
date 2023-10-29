@@ -40,4 +40,8 @@ installKubectx
 installK9s
 echo -e "\n"
 
+printTitle "Verifying installs"
+verifyCliToolInstalls
+echo -e "\n"
+
 printCliLinks
