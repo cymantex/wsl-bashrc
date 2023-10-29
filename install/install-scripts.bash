@@ -225,22 +225,21 @@ installNode() {
 }
 
 verifyInstall() {
-  GREEN='\033[01;32m'
-  RED='\033[0;31m'
-  NOCOLOR='\033[0m'
-  commandOutput=$("$@")
-
-  if [[ $? -eq 0 ]]; then
-    printf "%20s:\t${GREEN}OK!$NOCOLOR\n" "$*"
+  if "$@" &> /dev/null; then
+    printf "%20s:\t" "$*"
+    tput setaf 2 && echo "OK!"
   else
-    printf "%20s:\t${RED}ERROR!$NOCOLOR\n" "$*"
-    echo -e "${RED}$commandOutput$NOCOLOR"
+    printf "%20s:\t" "$*"
+    tput setaf 1 && echo "ERROR!"
   fi
+
+  tput sgr0
 }
 
 verifyCliToolInstalls() {
   verifyInstall jq --version
   verifyInstall q -h
+  verifyInstall xmllint --version
   verifyInstall nvim --version
   verifyInstall bat --version
   verifyInstall batgrep --version
