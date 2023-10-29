@@ -23,6 +23,7 @@ installQ
 installNeoVim
 installWslu
 installNode
+installMaven
 installCorrettoJdk
 installGo
 echo -e "\n"
