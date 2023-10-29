@@ -238,12 +238,12 @@ installTldr() {
   npm install -g tldr || exit
 }
 
-verifyInstall() {
+_verifyInstall() {
   if "$@" &> /dev/null; then
-    printf "%20s: " "$*"
+    printf "%-20s" "$*"
     tput setaf 2 && echo "OK!"
   else
-    printf "%20s: " "$*"
+    printf "%-20s" "$*"
     tput setaf 1 && echo "ERROR!"
   fi
 
@@ -251,62 +251,70 @@ verifyInstall() {
 }
 
 verifyCliToolInstalls() {
-  verifyInstall jq --version
-  verifyInstall q -h
-  verifyInstall xmllint --version
-  verifyInstall nvim --version
-  verifyInstall tldr --version
-  verifyInstall fzf --version
-  verifyInstall bat --version
-  verifyInstall batgrep --version
+  _verifyInstall jq --version
+  _verifyInstall q -h
+  _verifyInstall xmllint --version
+  _verifyInstall nvim --version
+  _verifyInstall tldr --version
+  _verifyInstall fzf --version
+  _verifyInstall bat --version
+  _verifyInstall batgrep --version
 
-  verifyInstall nvm --version
-  verifyInstall brew --version
+  _verifyInstall nvm --version
+  _verifyInstall brew --version
 
-  verifyInstall wslview --version
+  _verifyInstall wslview --version
 
-  verifyInstall node --version
-  verifyInstall java --version
-  verifyInstall mvn --version
-  verifyInstall go version
+  _verifyInstall node --version
+  _verifyInstall java --version
+  _verifyInstall mvn --version
+  _verifyInstall go version
 
-  verifyInstall kubectl --help
-  verifyInstall kubectl krew -h
-  verifyInstall kubectx --help
-  verifyInstall k9s --help
+  _verifyInstall kubectl --help
+  _verifyInstall kubectl krew -h
+  _verifyInstall kubectx --help
+  _verifyInstall k9s --help
 
-  verifyInstall aws --version
-  verifyInstall sam --version
+  _verifyInstall aws --version
+  _verifyInstall sam --version
+}
+
+_printCliLink() {
+  tput setaf 6 && printf "%-18s" "$1"
+  tput sgr0
+  printf "%s\n" "$2"
 }
 
 printCliLinks() {
   printTitle "Links to CLI tools:"
-  echo "DevTools:"
-  echo "jq: https://jqlang.github.io/jq/tutorial"
-  echo "q: https://harelba.github.io/q"
-  echo "fzf: https://github.com/junegunn/fzf#usage"
-  echo "fdfind: https://github.com/sharkdp/fd"
-  echo "rg: https://github.com/BurntSushi/ripgrep"
-  echo "xmllint: https://gnome.pages.gitlab.gnome.org/libxml2/xmllint.html"
-  echo "tldr: https://tldr.sh"
-  echo "neovim kickstart: https://github.com/nvim-lua/kickstart.nvim"
-  echo "bat: https://github.com/sharkdp/bat"
-  echo -e "bat-extras: https://github.com/eth-p/bat-extras\n"
+  echo -e "\nDevTools:"
+  _printCliLink "jq" "https://jqlang.github.io/jq/tutorial"
+  _printCliLink "q" "https://harelba.github.io/q"
+  _printCliLink "xmllint" "https://gnome.pages.gitlab.gnome.org/libxml2/xmllint.html"
+  _printCliLink "tldr" "https://tldr.sh"
+  _printCliLink "fzf" "https://github.com/junegunn/fzf#usage"
+  _printCliLink "fdfind" "https://github.com/sharkdp/fd"
+  _printCliLink "rg" "https://github.com/BurntSushi/ripgrep"
+  _printCliLink "xmllint" "https://gnome.pages.gitlab.gnome.org/libxml2/xmllint.html"
+  _printCliLink "tldr" "https://tldr.sh"
+  _printCliLink "kickstart.nvim" "https://github.com/nvim-lua/kickstart.nvim"
+  _printCliLink "bat" "https://github.com/sharkdp/bat"
+  _printCliLink "bat-extras" "https://github.com/eth-p/bat-extras"
 
-  echo "Package managers:"
-  echo "nvm: https://github.com/nvm-sh/nvm"
-  echo -e "brew: https://brew.sh\n"
+  echo -e "\nPackage managers:"
+  _printCliLink "nvm" "https://github.com/nvm-sh/nvm"
+  _printCliLink "brew" "https://brew.sh"
 
-  echo "WSL:"
-  echo -e "wslu: https://wslutiliti.es/wslu/\n"
+  echo -e "\nWSL:"
+  _printCliLink "wslu" "https://wslutiliti.es/wslu/"
 
-  echo "Kubernetes:"
-  echo "k9s: https://k9scli.io"
-  echo "kubectl: https://kubernetes.io/docs/reference/kubectl/cheatsheet"
-  echo "kubectl krew: https://krew.sigs.k8s.io/"
-  echo -e "kubectx: https://github.com/ahmetb/kubectx\n"
+  echo -e "\nKubernetes:"
+  _printCliLink "k9s" "https://k9scli.io"
+  _printCliLink "kubectl" "https://kubernetes.io/docs/reference/kubectl/cheatsheet"
+  _printCliLink "kubectl krew" "https://krew.sigs.k8s.io/"
+  _printCliLink "kubectx" "https://github.com/ahmetb/kubectx"
 
-  echo "AWS:"
-  echo "aws: https://docs.aws.amazon.com/cli/"
-  echo -e "sam: https://github.com/aws/aws-sam-cli\n"
+  echo -e "\nAWS:"
+  _printCliLink "aws" "https://docs.aws.amazon.com/cli/"
+  _printCliLink "sam" "https://github.com/aws/aws-sam-cli"
 }
