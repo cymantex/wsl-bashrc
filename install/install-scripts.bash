@@ -221,15 +221,29 @@ installQ() {
 }
 
 installNode() {
+  if node --version &> /dev/null; then
+    printAlreadyInstalled "node"
+    return
+  fi
+
   nvm install node || exit
+}
+
+installTldr() {
+  if tldr --version &> /dev/null; then
+    printAlreadyInstalled "tldr"
+    return
+  fi
+
+  npm install -g tldr || exit
 }
 
 verifyInstall() {
   if "$@" &> /dev/null; then
-    printf "%20s:\t" "$*"
+    printf "%20s: " "$*"
     tput setaf 2 && echo "OK!"
   else
-    printf "%20s:\t" "$*"
+    printf "%20s: " "$*"
     tput setaf 1 && echo "ERROR!"
   fi
 
@@ -241,6 +255,8 @@ verifyCliToolInstalls() {
   verifyInstall q -h
   verifyInstall xmllint --version
   verifyInstall nvim --version
+  verifyInstall tldr --version
+  verifyInstall fzf --version
   verifyInstall bat --version
   verifyInstall batgrep --version
 
@@ -255,9 +271,42 @@ verifyCliToolInstalls() {
   verifyInstall go version
 
   verifyInstall kubectl --help
+  verifyInstall kubectl krew -h
   verifyInstall kubectx --help
   verifyInstall k9s --help
 
   verifyInstall aws --version
   verifyInstall sam --version
+}
+
+printCliLinks() {
+  printTitle "Links to CLI tools:"
+  echo "DevTools:"
+  echo "jq: https://jqlang.github.io/jq/tutorial"
+  echo "q: https://harelba.github.io/q"
+  echo "fzf: https://github.com/junegunn/fzf#usage"
+  echo "fdfind: https://github.com/sharkdp/fd"
+  echo "rg: https://github.com/BurntSushi/ripgrep"
+  echo "xmllint: https://gnome.pages.gitlab.gnome.org/libxml2/xmllint.html"
+  echo "tldr: https://tldr.sh"
+  echo "neovim kickstart: https://github.com/nvim-lua/kickstart.nvim"
+  echo "bat: https://github.com/sharkdp/bat"
+  echo -e "bat-extras: https://github.com/eth-p/bat-extras\n"
+
+  echo "Package managers:"
+  echo "nvm: https://github.com/nvm-sh/nvm"
+  echo -e "brew: https://brew.sh\n"
+
+  echo "WSL:"
+  echo -e "wslu: https://wslutiliti.es/wslu/\n"
+
+  echo "Kubernetes:"
+  echo "k9s: https://k9scli.io"
+  echo "kubectl: https://kubernetes.io/docs/reference/kubectl/cheatsheet"
+  echo "kubectl krew: https://krew.sigs.k8s.io/"
+  echo -e "kubectx: https://github.com/ahmetb/kubectx\n"
+
+  echo "AWS:"
+  echo "aws: https://docs.aws.amazon.com/cli/"
+  echo -e "sam: https://github.com/aws/aws-sam-cli\n"
 }
