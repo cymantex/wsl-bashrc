@@ -15,6 +15,14 @@ alias readClipBoard='powershell.exe -command "Get-ClipBoard"'
 alias killJava='killall java'
 alias killNode='killall node'
 
+# APT
+alias aptUpdate='sudo apt update -y && sudo apt upgrade -y'
+alias aptInstall='sudo apt install -y'
+aptUninstall() {
+  sudo apt purge -y "$@"
+  sudo apt autoremove -y
+}
+
 # Allows calling python module using a syntax like _python3 path/to/script.py
 _python3() {
   scriptPath=$1
