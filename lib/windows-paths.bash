@@ -3,9 +3,8 @@
 ############################
 
 if [ -z "$WIN_USER" ]; then
-  # Initialize WIN_USER for WSL1
-  WIN_USER=$(powershell.exe '$env:UserName' | tr -d '\r')
-  export WIN_USER
+  echo "WIN_USER is not set. Exiting..."
+  exit 1
 fi
 
 # Windows paths from WSL

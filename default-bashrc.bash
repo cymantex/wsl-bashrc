@@ -4,6 +4,9 @@
 ## Edit these to fit your install
 ############################
 
+# Name of your windows user. You can check with $env:UserName in powershell
+# export WIN_USER=
+
 # Path to this bashrc repo
 export WSL_BASHRC="/mnt/c/dev/scripts/wsl-bashrc"
 
