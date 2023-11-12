@@ -67,7 +67,7 @@ installGo() {
 }
 
 installAwsCli() {
-  if test -f /usr/bin/aws; then
+  if test -f /usr/bin/aws || test -f /usr/local/bin/aws; then
     printAlreadyInstalled "aws"
     return
   fi
@@ -80,7 +80,7 @@ installAwsCli() {
 }
 
 installAwsSamCli() {
-  if test -f /usr/bin/sam; then
+  if test -f /usr/bin/sam || test -f /usr/local/bin/sam; then
     printAlreadyInstalled "sam"
     return
   fi
@@ -119,7 +119,7 @@ installKrew() {
     ./"${KREW}" install krew
   ) || exit
 
-  reloadBashrc
+  source "$HOME"/.bashrc
   forceRestart "kubectl krew"
 }
 
@@ -157,7 +157,7 @@ installNvm() {
   fi
 
   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash || exit
-  reloadBashrc
+  source "$HOME"/.bashrc
 }
 
 installK9s() {
@@ -235,7 +235,7 @@ installTldr() {
     return
   fi
 
-  npm install -g tldr || exit
+  sudo npm install -g tldr || exit
 }
 
 _verifyInstall() {
