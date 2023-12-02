@@ -28,6 +28,11 @@ gitAmend() {
   git commit --amend --no-edit
 }
 
+gitCommit() {
+  git add .
+  git commit -m "$@"
+}
+
 gitPush() {
   if git pull "$@"; then
     git push
