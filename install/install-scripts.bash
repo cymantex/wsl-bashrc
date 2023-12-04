@@ -238,6 +238,15 @@ installTldr() {
   sudo npm install -g tldr || exit
 }
 
+installBun() {
+  if test -f ~/.bun/bin/bun; then
+    printAlreadyInstalled "bun"
+    return
+  fi
+
+  curl -fsSL https://bun.sh/install | bash
+}
+
 _verifyInstall() {
   if "$@" &> /dev/null; then
     printf "%-20s" "$*"
@@ -269,6 +278,7 @@ verifyCliToolInstalls() {
   _verifyInstall java --version
   _verifyInstall mvn --version
   _verifyInstall go version
+  _verifyInstall bun --version
 
   _verifyInstall kubectl --help
   _verifyInstall kubectl krew -h
@@ -300,6 +310,7 @@ printCliLinks() {
   _printCliLink "kickstart.nvim" "https://github.com/nvim-lua/kickstart.nvim"
   _printCliLink "bat" "https://github.com/sharkdp/bat"
   _printCliLink "bat-extras" "https://github.com/eth-p/bat-extras"
+  _printCliLink "bun" "https://bun.sh/docs"
 
   echo -e "\nPackage managers:"
   _printCliLink "nvm" "https://github.com/nvm-sh/nvm"
