@@ -17,6 +17,9 @@ export BASHRC_INSTALL="$WSL_BASHRC/install"
 # Utilities for working with our components through maven (all commands starts with "mvn")
 . "$BASHRC_LIB/mvn-utils.bash"
 
+# Utilities for working with our components through npm (all commands starts with "npm", "npx" or "bun")
+. "$BASHRC_LIB/npm-utils.bash"
+
 # A collection of various other functions/aliases that have been proven useful
 . "$BASHRC_LIB/misc-utils.bash"
 
