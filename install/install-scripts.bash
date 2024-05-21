@@ -5,6 +5,7 @@ printTitle() {
 }
 
 forceRestart() {
+  echo -e "\n"
   printTitle "$1 installed - restart terminal and rerun script to continue the install"
   exit
 }
@@ -25,18 +26,6 @@ updateApt() {
   echo -e "\n"
 }
 
-installCorrettoJdk() {
-  if test -f /usr/bin/java; then
-    printAlreadyInstalled "java"
-    return
-  fi
-
-  wget -O- https://apt.corretto.aws/corretto.key | sudo apt-key add - || exit
-  sudo add-apt-repository 'deb https://apt.corretto.aws stable main' || exit
-  sudo apt-get update
-  sudo apt-get install -y java-17-amazon-corretto-jdk || exit
-}
-
 installMaven() {
   if [[ -z "${MAVEN_VERSION}" ]]; then
     echo "MAVEN_VERSION environment variable is not set"
@@ -45,31 +34,33 @@ installMaven() {
 
   if test -d /opt/apache-maven-"$MAVEN_VERSION"; then
     printAlreadyInstalled "maven"
-    return
+    return 1
   fi
 
   wget https://dlcdn.apache.org/maven/maven-3/"$MAVEN_VERSION"/binaries/apache-maven-"$MAVEN_VERSION"-bin.tar.gz || exit
   sudo tar -xvf apache-maven-"$MAVEN_VERSION"-bin.tar.gz || exit
   sudo mv apache-maven-"$MAVEN_VERSION" /opt
   rm apache-maven-"$MAVEN_VERSION"-bin.tar.gz
+  return 0
 }
 
 installGo() {
   if test -d /usr/local/go; then
     printAlreadyInstalled "go"
-    return
+    return 1
   fi
 
   wget https://go.dev/dl/go1.21.3.linux-amd64.tar.gz
   sudo tar -C /usr/local -xzf go1.21.3.linux-amd64.tar.gz
   export PATH=$PATH:/usr/local/go/bin
   rm go1.21.3.linux-amd64.tar.gz
+  return 0
 }
 
 installAwsCli() {
   if test -f /usr/bin/aws || test -f /usr/local/bin/aws; then
     printAlreadyInstalled "aws"
-    return
+    return 1
   fi
 
   curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" || exit
@@ -77,12 +68,13 @@ installAwsCli() {
   sudo ./aws/install || exit
   sudo cp /usr/local/bin/aws /usr/bin/aws
   rm awscliv2.zip
+  return 0
 }
 
 installAwsSamCli() {
   if test -f /usr/bin/sam || test -f /usr/local/bin/sam; then
     printAlreadyInstalled "sam"
-    return
+    return 1
   fi
 
   wget https://github.com/aws/aws-sam-cli/releases/latest/download/aws-sam-cli-linux-x86_64.zip || exit
@@ -90,23 +82,25 @@ installAwsSamCli() {
   sudo ./sam-installation/install || exit
   sudo cp /usr/local/bin/sam /usr/bin/sam
   rm aws-sam-cli-linux-x86_64.zip
+  return 0
 }
 
 installKubectl() {
   if test -f /usr/bin/kubectl; then
     printAlreadyInstalled "kubectl"
-    return
+    return 1
   fi
 
   curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" || exit
   sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl || exit
   sudo cp /usr/local/bin/kubectl /usr/bin/kubectl
+  return 0
 }
 
 installKrew() {
   if test -d "$HOME/.krew"; then
     printAlreadyInstalled "krew"
-    return
+    return 1
   fi
 
   (
@@ -120,13 +114,13 @@ installKrew() {
   ) || exit
 
   source "$HOME"/.bashrc
-  forceRestart "kubectl krew"
+  return 0
 }
 
 installKubectx() {
   if test -f /usr/bin/kubectx; then
     printAlreadyInstalled "kubectx"
-    return
+    return 1
   fi
 
   kubectl krew install ctx || exit
@@ -138,35 +132,38 @@ installKubectx() {
   echo "kubectl ctx \$@" >> kubectx
   sudo mv kubectx /usr/bin/
   sudo cp /usr/bin/kubectx /usr/local/bin
+  return 0
 }
 
 installHomebrew() {
   if test -f /home/linuxbrew/.linuxbrew/bin/brew; then
     printAlreadyInstalled "brew"
-    return
+    return 1
   fi
 
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" || exit
-  forceRestart "homebrew"
+  return 0
 }
 
 installNvm() {
   if test -d "$HOME/.nvm"; then
     printAlreadyInstalled "nvm"
-    return
+    return 1
   fi
 
   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash || exit
   source "$HOME"/.bashrc
+  return 0
 }
 
 installK9s() {
   if test -f /home/linuxbrew/.linuxbrew/bin/k9s; then
     printAlreadyInstalled "k9s"
-    return
+    return 1
   fi
 
   brew install derailed/k9s/k9s || exit
+  return 0
 }
 
 installNode() {
@@ -178,35 +175,38 @@ installNode() {
 installNeoVim() {
   if test -f /usr/bin/nvim; then
     printAlreadyInstalled "nvim"
-    return
+    return 1
   fi
 
   sudo add-apt-repository ppa:neovim-ppa/unstable || exit
   sudo apt update
   sudo apt install neovim || exit
   git clone https://github.com/nvim-lua/kickstart.nvim.git "${XDG_CONFIG_HOME:-$HOME/.config}"/nvim || exit
+  return 0
 }
 
 installBat() {
   if test -f /usr/bin/bat; then
     printAlreadyInstalled "bat"
-    return
+    return 1
   fi
 
   sudo apt install bat || exit
   sudo ln -s /usr/bin/batcat /usr/bin/bat
   brew install bat-extras || exit
+  return 0
 }
 
 installWslu() {
   if test -f /usr/bin/wslview; then
     printAlreadyInstalled "WSL Utilities"
-    return
+    return 1
   fi
 
   sudo add-apt-repository -y ppa:wslutilities/wslu
   sudo apt update
   sudo apt install -y wslu
+  return 0
 }
 
 installQ() {
@@ -218,6 +218,7 @@ installQ() {
   wget https://github.com/harelba/q/releases/download/v3.1.6/q-text-as-data-3.1.6-1.x86_64.deb || exit
   sudo dpkg -i q-text-as-data-3.1.6-1.x86_64.deb || exit
   rm q-text-as-data-3.1.6-1.x86_64.deb
+  return 0
 }
 
 installNode() {
@@ -227,6 +228,7 @@ installNode() {
   fi
 
   nvm install node || exit
+  return 0
 }
 
 installTldr() {
@@ -235,16 +237,38 @@ installTldr() {
     return
   fi
 
-  sudo npm install -g tldr || exit
+  npm install -g tldr || exit
+  return 0
 }
 
 installBun() {
   if test -f ~/.bun/bin/bun; then
     printAlreadyInstalled "bun"
-    return
+    return 1
   fi
 
   curl -fsSL https://bun.sh/install | bash
+  return 0
+}
+
+installSdkMan() {
+  if test -d ~/.sdkman; then
+    printAlreadyInstalled "sdkman"
+    return 1
+  fi
+
+  curl -s "https://get.sdkman.io" | bash
+  return 0
+}
+
+installJava() {
+  if java --version &> /dev/null; then
+    printAlreadyInstalled "java"
+    return 1
+  fi
+
+  sdk install java
+  return 0
 }
 
 _verifyInstall() {
@@ -271,6 +295,7 @@ verifyCliToolInstalls() {
 
   _verifyInstall nvm --version
   _verifyInstall brew --version
+  _verifyInstall sdk help
 
   _verifyInstall wslview --version
 

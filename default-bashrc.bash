@@ -5,7 +5,7 @@
 ############################
 
 # Name of your windows user. You can check with $env:UserName in powershell
-# export WIN_USER=
+# export WIN_USER="Simon Eriksson"
 
 # Path to this bashrc repo
 export WSL_BASHRC="/mnt/c/dev/scripts/wsl-bashrc"

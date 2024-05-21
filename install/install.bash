@@ -16,6 +16,7 @@ echo -e "\n"
 printTitle "Installing package managers"
 installNvm
 installHomebrew
+installSdkMan && forceRestart "sdkman"
 echo -e "\n"
 
 printTitle "Installing DevTools"
@@ -24,8 +25,8 @@ installQ
 installNeoVim
 installWslu
 installNode
+installJava
 installMaven
-installCorrettoJdk
 installGo
 installTldr
 echo -e "\n"
@@ -37,7 +38,7 @@ echo -e "\n"
 
 printTitle "Installing Kubernetes tools"
 installKubectl
-installKrew
+installKrew && forceRestart "krew"
 installKubectx
 installK9s
 echo -e "\n"
