@@ -26,8 +26,7 @@ gitStashPull() {
 gitSync() {
   git add .
   git commit -m "$1" --no-verify
-  git pull --rebase
-  git push
+  gitPush ---rebase
 }
 
 gitAmend() {
