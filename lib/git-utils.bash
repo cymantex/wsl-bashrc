@@ -29,6 +29,11 @@ gitSync() {
   gitPush ---rebase
 }
 
+gitSyncAmend() {
+  gitAmend --no-verify
+  gitPush ---rebase
+}
+
 gitAmend() {
   git add .
   git commit --amend --no-edit "$@"
