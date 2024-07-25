@@ -26,12 +26,12 @@ gitStashPull() {
 gitSync() {
   git add .
   git commit -m "$1" --no-verify
-  gitPush ---rebase
+  gitPush --rebase
 }
 
 gitSyncAmend() {
   gitAmend --no-verify
-  gitPush ---rebase
+  gitPush --rebase
 }
 
 gitAmend() {
