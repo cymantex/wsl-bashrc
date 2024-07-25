@@ -26,6 +26,27 @@ updateApt() {
   echo -e "\n"
 }
 
+installJenv() {
+  if test -f /home/linuxbrew/.linuxbrew/bin/jenv; then
+    printAlreadyInstalled "jenv"
+    return
+  fi
+
+  brew install jenv || exit
+}
+
+installCorrettoJdk() {
+  if test -f /usr/bin/java; then
+    printAlreadyInstalled "java"
+    return
+  fi
+
+  wget -O- https://apt.corretto.aws/corretto.key | sudo apt-key add - || exit
+  sudo add-apt-repository 'deb https://apt.corretto.aws stable main' || exit
+  sudo apt-get update
+  sudo apt-get install -y java-21-amazon-corretto-jdk || exit
+}
+
 installMaven() {
   if [[ -z "${MAVEN_VERSION}" ]]; then
     echo "MAVEN_VERSION environment variable is not set"
@@ -271,6 +292,15 @@ installJava() {
   return 0
 }
 
+installGh() {
+  if gh --version &> /dev/null; then
+    printAlreadyInstalled "gh"
+    return
+  fi
+
+  brew install gh || exit
+}
+
 _verifyInstall() {
   if "$@" &> /dev/null; then
     printf "%-20s" "$*"
@@ -301,6 +331,7 @@ verifyCliToolInstalls() {
 
   _verifyInstall node --version
   _verifyInstall java --version
+  _verifyInstall jenv --version
   _verifyInstall mvn --version
   _verifyInstall go version
   _verifyInstall bun --version

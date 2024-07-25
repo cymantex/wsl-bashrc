@@ -27,8 +27,11 @@ installWslu
 installNode
 installJava
 installMaven
+installCorrettoJdk
+installJenv
 installGo
 installTldr
+installGh
 echo -e "\n"
 
 printTitle "Installing AWS tools"

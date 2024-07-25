@@ -57,3 +57,8 @@ gitUpdateWslBashrc() {
   cd "$originalPwd" || return
   reloadBashrc
 }
+
+gitSetupAliases() {
+  git config --global alias.amend 'commit --amend --no-edit --no-verify'
+  git config --global alias.sync 'git add . && git commit -m "'"$1"'" --no-verify && git pull --rebase && git push'
+}
