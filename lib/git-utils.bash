@@ -24,13 +24,16 @@ gitStashPull() {
 }
 
 gitSync() {
+  message="$1"
+  shift
+
   git add .
-  git commit -m "$1" --no-verify
+  git commit -m "$message" "$@"
   gitPush --rebase
 }
 
 gitSyncAmend() {
-  gitAmend --no-verify
+  gitAmend "$@"
   gitPush --rebase
 }
 
