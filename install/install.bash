@@ -27,7 +27,6 @@ installWslu
 installNode
 installJava
 installMaven
-installCorrettoJdk
 installJenv
 installGo
 installTldr
