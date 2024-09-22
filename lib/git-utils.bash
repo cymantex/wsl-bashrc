@@ -71,3 +71,21 @@ gitUpdateWslBashrc() {
   cd "$originalPwd" || return
   reloadBashrc
 }
+
+gitCloneAllReposForUser() {
+  user="$1"
+
+  if [[ -z "$user" ]]; then
+    echo "Usage: gitCloneAllReposForUser <user>"
+    return
+  fi
+
+  gh repo list --limit 1000 | while read -r repo _; do
+    if [[ -d "$repo" ]]; then
+      echo "$repo already exists. Skipping..."
+      continue
+    fi
+
+    gh repo clone "$repo" "$repo"
+  done
+}

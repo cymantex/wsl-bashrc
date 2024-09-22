@@ -7,6 +7,9 @@
 # Name of your windows user. You can check with $env:UserName in powershell
 # export WIN_USER="Simon Eriksson"
 
+# GH_TOKEN is used for all your GitHub repos
+# export GH_TOKEN="your-token-here"
+
 # Path to this bashrc repo
 export WSL_BASHRC="/mnt/c/dev/scripts/wsl-bashrc"
 
