@@ -1,17 +1,3 @@
-setupWinSymbolicLinks() {
-  ln -s "$WIN_HOME"/.testcontainers.properties ~/.testcontainers.properties
-  ln -s "$WIN_HOME"/.aws ~
-  ln -s "$WIN_HOME"/.kube ~
-  ln -s "$WIN_HOME"/.config ~
-  ln -s "$WIN_HOME"/.git-templates ~
-  ln -s "$WIN_HOME"/.m2 ~
-}
-
-setupWinSsh() {
-  cp -r "$WIN_HOME"/.ssh ~
-  chmod 600 ~/.ssh/id_rsa
-}
-
 setupGlobalGitConfig() {
   echo "email: "
   read -r email

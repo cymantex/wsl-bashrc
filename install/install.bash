@@ -32,6 +32,7 @@ installJenv
 installGo
 installTldr
 installGh
+installBun
 echo -e "\n"
 
 printTitle "Installing AWS tools"
