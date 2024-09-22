@@ -72,11 +72,11 @@ gitUpdateWslBashrc() {
   reloadBashrc
 }
 
-gitCloneAllReposForUser() {
+gitCloneAllGithubReposForUser() {
   user="$1"
 
   if [[ -z "$user" ]]; then
-    echo "Usage: gitCloneAllReposForUser <user>"
+    echo "Usage: gitCloneAllGithubReposForUser <user>"
     return
   fi
 

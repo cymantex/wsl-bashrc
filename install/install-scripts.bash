@@ -11,8 +11,8 @@ forceRestart() {
 }
 
 disableStartUpMessages() {
-  touch .sudo_as_admin_successful
-  touch .hushlogin
+  touch ~/.sudo_as_admin_successful
+  touch ~/.hushlogin
 }
 
 printAlreadyInstalled() {
