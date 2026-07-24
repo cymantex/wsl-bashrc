@@ -30,22 +30,29 @@ installNode
 installJava
 installMaven
 installJenv
-installGo
 installTldr
 installGh
 installBun
 echo -e "\n"
 
 printTitle "Installing AWS tools"
-installAwsCli
-installAwsSamCli
+if confirm "Do you want to install AWS tools?"; then
+  installAwsCli
+  installAwsSamCli
+else
+  echo "Skipping AWS tools installation."
+fi
 echo -e "\n"
 
 printTitle "Installing Kubernetes tools"
-installKubectl
-installKrew && forceRestart "krew"
-installKubectx
-installK9s
+if confirm "Do you want to install Kubernetes tools?"; then
+  installKubectl
+  installKrew && forceRestart "krew"
+  installKubectx
+  installK9s
+else
+  echo "Skipping Kubernetes tools installation."
+fi
 echo -e "\n"
 
 printTitle "Verifying installs"

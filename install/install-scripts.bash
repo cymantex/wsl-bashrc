@@ -1,3 +1,9 @@
+confirm() {
+  local message="${1:-Are you sure?}"
+  read -r -p "$message [y/N] " response
+  [[ "$response" =~ ^[yY]([eE][sS])?$ ]]
+}
+
 printTitle() {
   echo "###############################"
   echo "$@"
@@ -58,19 +64,6 @@ installMaven() {
   sudo tar -xvf apache-maven-"$MAVEN_VERSION"-bin.tar.gz || exit
   sudo mv apache-maven-"$MAVEN_VERSION" /opt
   rm apache-maven-"$MAVEN_VERSION"-bin.tar.gz
-  return 0
-}
-
-installGo() {
-  if test -d /usr/local/go; then
-    printAlreadyInstalled "go"
-    return 1
-  fi
-
-  wget https://go.dev/dl/go1.21.3.linux-amd64.tar.gz
-  sudo tar -C /usr/local -xzf go1.21.3.linux-amd64.tar.gz
-  export PATH=$PATH:/usr/local/go/bin
-  rm go1.21.3.linux-amd64.tar.gz
   return 0
 }
 
