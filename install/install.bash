@@ -23,7 +23,9 @@ printTitle "Installing DevTools"
 installBat
 installQ
 installNeoVim
-installWslu
+if isWslEnvironment; then
+  installWslu
+fi
 installNode
 installJava
 installMaven

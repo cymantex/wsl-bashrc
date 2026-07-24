@@ -4,8 +4,6 @@
 export BASHRC_LIB="$WSL_BASHRC/lib"
 export BASHRC_INSTALL="$WSL_BASHRC/install"
 
-. "$BASHRC_LIB/windows-paths.bash"
-
 . "$BASHRC_LIB/cli-tools.bash"
 
 . "$BASHRC_INSTALL/install-scripts.bash"

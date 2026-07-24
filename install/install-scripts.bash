@@ -19,6 +19,14 @@ printAlreadyInstalled() {
   echo "$1 already installed. Skipping..."
 }
 
+isWslEnvironment() {
+  if [ "$BASHRC_TARGET" = "wsl" ]; then
+    return 0
+  fi
+
+  grep -qi microsoft /proc/version 2>/dev/null
+}
+
 updateApt() {
   printTitle "Updating apt"
   sudo apt update -y
@@ -315,7 +323,9 @@ verifyCliToolInstalls() {
   _verifyInstall brew --version
   _verifyInstall sdk help
 
-  _verifyInstall wslview --version
+  if isWslEnvironment; then
+    _verifyInstall wslview --version
+  fi
 
   _verifyInstall node --version
   _verifyInstall java --version
@@ -360,8 +370,10 @@ printCliLinks() {
   _printCliLink "nvm" "https://github.com/nvm-sh/nvm"
   _printCliLink "brew" "https://brew.sh"
 
-  echo -e "\nWSL:"
-  _printCliLink "wslu" "https://wslutiliti.es/wslu/"
+  if isWslEnvironment; then
+    echo -e "\nWSL:"
+    _printCliLink "wslu" "https://wslutiliti.es/wslu/"
+  fi
 
   echo -e "\nKubernetes:"
   _printCliLink "k9s" "https://k9scli.io"

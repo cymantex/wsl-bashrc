@@ -8,8 +8,16 @@ sudoWithLocalBashrc() {
 }
 
 # Clipboard
-alias clip='clip.exe'
-alias readClipBoard='powershell.exe -command "Get-ClipBoard"'
+if [ "$BASHRC_TARGET" = "wsl" ]; then
+  alias clip='clip.exe'
+  alias readClipBoard='powershell.exe -command "Get-ClipBoard"'
+elif command -v wl-copy >/dev/null 2>&1 && command -v wl-paste >/dev/null 2>&1; then
+  alias clip='wl-copy'
+  alias readClipBoard='wl-paste'
+elif command -v xclip >/dev/null 2>&1; then
+  alias clip='xclip -selection clipboard'
+  alias readClipBoard='xclip -selection clipboard -o'
+fi
 
 # Kill processes
 alias killJava='killall java'
@@ -57,6 +65,11 @@ decryptDbeaverCredentials() {
 
   projectName=$1
   pwd=$PWD
+  if [ "$BASHRC_TARGET" != "wsl" ] || [ -z "$WIN_APPDATA" ]; then
+    echo "decryptDbeaverCredentials is only supported when using default-bashrc.bash (WSL profile)."
+    return
+  fi
+
   cd "$WIN_APPDATA/Roaming/DbeaverData/workspace6/$projectName/.dbeaver" || return
   openssl aes-128-cbc -d \
     -K babb4a9f774ab853c96c2d653dfe544a \
