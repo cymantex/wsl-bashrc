@@ -28,7 +28,7 @@ if isWslEnvironment; then
 fi
 installNode
 installJava
-installMaven
+#installMaven
 installJenv
 installTldr
 installGh

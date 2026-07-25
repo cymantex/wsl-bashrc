@@ -22,13 +22,21 @@ if test -d /usr/local/go; then
   export PATH=$PATH:/usr/local/go/bin
 fi
 
-# Maven
-export MAVEN_VERSION=3.9.5
+#SDK Man
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
-if test -d /opt/apache-maven-"$MAVEN_VERSION"; then
-  M2_HOME="/opt/apache-maven-$MAVEN_VERSION"
-  PATH="$M2_HOME/bin:$PATH"
-fi
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# pnpm
+export PNPM_HOME="/home/simer/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME/bin:"*) ;;
+  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
+esac
+# pnpm end
 
 ############################
 # CLI Tools

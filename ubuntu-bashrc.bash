@@ -20,7 +20,7 @@ export BASHRC_TARGET="ubuntu"
 . "$WSL_BASHRC/external-imports.bash"
 
 # The bashrc included in a fresh Ubuntu install
-. "$WSL_BASHRC/external/default-ubuntu.bash"
+. "$WSL_BASHRC/external/ubuntu.bash"
 
 # Shorten to prompt to only include the current directory
 . "$WSL_BASHRC/lib/short-prompt.bash"
